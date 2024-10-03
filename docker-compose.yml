@@ -1,0 +1,11 @@
+services:
+  scrapyd:
+    container_name: crawler
+    build:
+      context: ./crawler
+      dockerfile: Dockerfile
+    ports:
+      - "6800:6800"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
