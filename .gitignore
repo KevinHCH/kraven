@@ -300,3 +300,6 @@ pyrightconfig.json
 
 ./data/*.db
 /data/*.db
+
+./web/node_modules
+/web/node_modules

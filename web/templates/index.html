@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head_title %}Krave | Jobs {% endblock head_title %}
+{% block content %}
+
+<h1>Kraven the hunter</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  {% for job in jobs %}
+  <!--job card-->
+  <div class="bg-gray-800 border-red-600 hover:bg-gray-700 transition-colors p-2">
+    
+      <a href="{{ job.url }}" target="_blank" class="">
+        <h3 class="text-xl font-semibold text-blue-400">{{ job.title }}</h3>
+      </a>
+      <p class="text-green-400 font-bold mb-2">{{job.price|default_if_none:job.job_type}}</p>
+      <p class="text-gray-300 text-sm">experience: <span class="font-bold">{{ job.experience_level }}</span></p>
+      <p class="text-gray-300 text-sm">posted:
+        <span class="font-bold
+        {% if 'seconds' in job.posted_at or 'minutes' in job.posted_at %}
+            text-green-500
+        {% elif 'hours' in job.posted_at %}
+            text-amber-400
+        {% else %}
+            text-red-500
+        {% endif %}
+        ">
+            {{ job.posted_at }}
+        </span>
+
+      </p>
+      <p class="text-gray-300 text-sm pt-2">{{ job.description|slice:":200"|add:"..." }}</p>
+    
+  </div>
+  <!--end job card-->
+  {% endfor %}
+</div>
+{% endblock content %}
