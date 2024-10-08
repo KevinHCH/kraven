@@ -1,4 +1,16 @@
 services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/Berlin
+    ports:
+      - "${PORT:-8191}:8191"
+    restart: unless-stopped
+
   scrapyd:
     container_name: crawler
     build:
@@ -10,4 +22,19 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - ./data:/app/data
+    depends_on:
+      - flaresolverr
     restart: unless-stopped
+
+  django:
+    container_name: ui
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - ./data:/app/data
+    read_only: unless-stopped

@@ -7,6 +7,9 @@ from urllib.parse import urlparse, urlunparse
 from selectolax.parser import HTMLParser
 from scrapy.http import JsonRequest
 import dateparser
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 class UpworkSpider(scrapy.Spider):
@@ -17,7 +20,8 @@ class UpworkSpider(scrapy.Spider):
     docker_endpoint = "http://127.0.0.1:8191/v1"
 
     def start_requests(self):
-        with open("urls.json", "r") as f:
+        file_path = BASE_DIR / "data" / "urls.json"
+        with open(file_path, "r") as f:
             urls = json.load(f)
         for search_item in urls:
             name = search_item["name"]
@@ -96,10 +100,10 @@ class UpworkSpider(scrapy.Spider):
     def contains_terms_to_avoid(self, text):
         terms_to_avoid = ["last week", "days ago", "weeks ago"]
         return any(term in text.lower() for term in terms_to_avoid)
-    
+
     def parse_datetime(self, text):
         dt = dateparser.parse(text)
         if dt is None:
             return text
-        
+
         return dt.astimezone()
