@@ -17,7 +17,7 @@ class UpworkSpider(scrapy.Spider):
     allowed_domains = ["upwork.com"]
     start_urls = ["https://upwork.com"]
 
-    docker_endpoint = "http://127.0.0.1:8191/v1"
+    docker_endpoint = "http://flaresolverr:8191/v1"
 
     def start_requests(self):
         file_path = BASE_DIR / "data" / "urls.json"

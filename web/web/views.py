@@ -8,7 +8,7 @@ import json, time
 
 
 def index(request):
-    jobs_list = Jobs.objects.all().order_by("-created_at")
+    jobs_list = Jobs.objects.all().order_by("-posted_at_datetime")
     paginator = Paginator(jobs_list, 20)
     page_number = request.GET.get("page", 1)
     jobs = paginator.get_page(page_number)

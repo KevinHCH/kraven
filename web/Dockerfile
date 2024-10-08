@@ -4,6 +4,7 @@ RUN apk add --no-cache curl tzdata nodejs npm
 # Environment variables to prevent Python from writing .pyc files and to buffer stdout/stderr
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV APP_MODE=production
 
 WORKDIR /app
 
@@ -14,8 +15,11 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # generate tailwindcss styles
+RUN npm i
 RUN npm run gen:styles
 
 RUN python manage.py collectstatic --noinput
+RUN python manage.py compress
 
-CMD ["gunicorn", "web.wsgi:application", "--bind", "0.0.0.0:8000"]
+EXPOSE 8000
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]

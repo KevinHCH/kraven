@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,11 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-i@$d_^ws0^_v@-r$ocow0s27ih(y5bq$xktfy$5vz!gs6#=orf"
-
+is_prod = os.getenv("APP_MODE", "development") == "production"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = is_prod
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -49,6 +49,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -74,12 +76,13 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+sqlite_db_path = BASE_DIR if is_prod else BASE_DIR.parent
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         # "NAME": BASE_DIR / "db.sqlite3",
-        "NAME": BASE_DIR.parent / "data" / "jobs.db",
+        "NAME": sqlite_db_path / "data" / "jobs.db",
     }
 }
 
@@ -115,13 +118,21 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 # compressor config
 COMPRESS_ENABLED = True
-COMPRESS_ROOT = BASE_DIR / "static"
-STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)
+COMPRESS_OFFLINE = True
+COMPRESS_ROOT = STATIC_ROOT
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+)
+# COMPRESS_ROOT = BASE_DIR / "static"
+# STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
