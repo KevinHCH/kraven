@@ -10,16 +10,17 @@ from django.utils import timezone
 
 
 class Jobs(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     url = models.URLField(blank=True, null=True)
     posted_at = models.CharField(max_length=100)
     job_type = models.CharField(max_length=100)
     experience_level = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    posted_at_datetime = models.CharField(max_length=100, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     price = models.TextField(blank=True, null=True)
     sended_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        managed = False
         db_table = "jobs"

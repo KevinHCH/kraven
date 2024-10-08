@@ -9,7 +9,7 @@ from scrapy.http import JsonRequest
 import dateparser
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 class UpworkSpider(scrapy.Spider):
@@ -63,7 +63,7 @@ class UpworkSpider(scrapy.Spider):
         articles = dom.css("article")
         for article in articles:
             posted_at = article.css_first(".job-tile-header small").text().strip()
-            parsed_posted_at = self.parse_datetime(posted_at)
+            posted_at_datetime = self.parse_datetime(posted_at)
             title = article.css_first(".job-tile-header h2").text().strip()
             title = self.sanitize(title)
             url = article.css_first(".job-tile-header h2 a").attributes.get("href")
@@ -80,7 +80,8 @@ class UpworkSpider(scrapy.Spider):
                 yield {
                     "title": title,
                     "url": url,
-                    "posted_at": parsed_posted_at,
+                    "posted_at": posted_at,
+                    "posted_at_datetime": posted_at_datetime,
                     "price": price,
                     "job_type": job_type,
                     "duration": duration,
@@ -105,5 +106,4 @@ class UpworkSpider(scrapy.Spider):
         dt = dateparser.parse(text)
         if dt is None:
             return text
-
         return dt.astimezone()

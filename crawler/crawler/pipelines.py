@@ -10,7 +10,8 @@ import sqlite3
 from pathlib import Path
 from datetime import datetime
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+print("base_dir", BASE_DIR)
 
 
 class SQLitePipeline:
@@ -20,20 +21,20 @@ class SQLitePipeline:
         print(f"Connecting to database: {db_path}")
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
-
         # Create the jobs table if it doesn't exist
         self.cursor.execute(
             """CREATE TABLE IF NOT EXISTS jobs
                                (id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 title TEXT, 
                                 url TEXT, 
-                                posted_at TEXT, 
+                                posted_at TEXT,
+                                posted_at_datetime TEXT,
                                 job_type TEXT, 
-                               experience_level TEXT, 
-                               description TEXT,
-                               created_at TIMESTAMP NOT NULL,
-                               price TEXT,
-                               sended_at TIMESTAMP
+                                experience_level TEXT, 
+                                description TEXT,
+                                created_at TIMESTAMP NOT NULL,
+                                price TEXT,
+                                sended_at TIMESTAMP
                                )"""
         )
 
@@ -46,13 +47,14 @@ class SQLitePipeline:
         now = datetime.now()
         self.cursor.execute(
             """
-            INSERT INTO jobs (title, url, posted_at, job_type, experience_level, description, price, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
         """,
             (
                 item["title"],
                 item["url"],
                 item["posted_at"],
+                item["posted_at_datetime"],
                 item["job_type"],
                 item["experience_level"],
                 item["description"],
