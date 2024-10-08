@@ -1,20 +1,23 @@
-{% load compress %} {% load static %}
-
+{% load compress %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% block head_title %} Kraven {% endblock head_title %}
-    </title>
-    {% compress css %}
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
-    {% endcompress %}
-  </head>
-  <body class="bg-slate-800 text-slate-100">
-    <main class="container mx-auto p-4">
-      {% block content %} {% endblock content %}
-    </main>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block head_title %}
+                Kraven
+            {% endblock head_title %}
+        </title>
+        {% compress css %}
+            <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+        {% endcompress %}
+    </head>
+    <body class="bg-slate-800 text-slate-100">
+        <main class="container mx-auto p-4">
+            {% block content %}
+            {% endblock content %}
+        </main>
+    </body>
 </html>

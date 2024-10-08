@@ -6,6 +6,7 @@ import re
 from urllib.parse import urlparse, urlunparse
 from selectolax.parser import HTMLParser
 from scrapy.http import JsonRequest
+import dateparser
 
 
 class UpworkSpider(scrapy.Spider):
@@ -13,7 +14,7 @@ class UpworkSpider(scrapy.Spider):
     allowed_domains = ["upwork.com"]
     start_urls = ["https://upwork.com"]
 
-    docker_endpoint = "http://158.220.120.76:8191/v1"
+    docker_endpoint = "http://127.0.0.1:8191/v1"
 
     def start_requests(self):
         with open("urls.json", "r") as f:
@@ -58,6 +59,7 @@ class UpworkSpider(scrapy.Spider):
         articles = dom.css("article")
         for article in articles:
             posted_at = article.css_first(".job-tile-header small").text().strip()
+            parsed_posted_at = self.parse_datetime(posted_at)
             title = article.css_first(".job-tile-header h2").text().strip()
             title = self.sanitize(title)
             url = article.css_first(".job-tile-header h2 a").attributes.get("href")
@@ -74,7 +76,7 @@ class UpworkSpider(scrapy.Spider):
                 yield {
                     "title": title,
                     "url": url,
-                    "posted_at": posted_at,
+                    "posted_at": parsed_posted_at,
                     "price": price,
                     "job_type": job_type,
                     "duration": duration,
@@ -94,3 +96,10 @@ class UpworkSpider(scrapy.Spider):
     def contains_terms_to_avoid(self, text):
         terms_to_avoid = ["last week", "days ago", "weeks ago"]
         return any(term in text.lower() for term in terms_to_avoid)
+    
+    def parse_datetime(self, text):
+        dt = dateparser.parse(text)
+        if dt is None:
+            return text
+        
+        return dt.astimezone()

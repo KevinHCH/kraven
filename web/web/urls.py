@@ -5,4 +5,6 @@ from web import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("stream", views.stream, name="stream"),
+    path("json", views.json_test, name="json"),
 ]

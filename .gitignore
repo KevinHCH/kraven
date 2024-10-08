@@ -303,3 +303,4 @@ pyrightconfig.json
 
 ./web/node_modules
 /web/node_modules
+/web/static/CACHE

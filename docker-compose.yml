@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "6800:6800"
+    environment:
+      - TZ=Europe/Berlin
     volumes:
       - ./data:/app/data
     restart: unless-stopped

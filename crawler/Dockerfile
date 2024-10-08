@@ -2,7 +2,6 @@ FROM python:3.12-alpine
 
 RUN apk add --no-cache curl tzdata dcron
 ENV PYTHONUNBUFFERED 1
-ENV TZ=Europe/Berlin
 
 WORKDIR /app
 
