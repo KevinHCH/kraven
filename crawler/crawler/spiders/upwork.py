@@ -9,7 +9,8 @@ from scrapy.http import JsonRequest
 import dateparser
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 class UpworkSpider(scrapy.Spider):
