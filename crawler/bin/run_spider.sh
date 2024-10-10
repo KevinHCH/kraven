@@ -12,11 +12,7 @@ is_time_to_run() {
 
 
 if is_time_to_run; then
-    # curl http://localhost:6800/schedule.json -d project=default -d spider=upwork
-    # curl http://127.0.0.1:6800/schedule.json -d '{"project": "crawler", "spider": "upwork"}' -H "Content-Type: application/json"
-    curl http://localhost:6800/schedule.json -d project=default -d spider=upwork
-
-
+    curl http://localhost:6800/schedule.json -d project=crawler -d spider=upwork
 else
     echo "Not running spider - outside of scheduled hours"
 fi
