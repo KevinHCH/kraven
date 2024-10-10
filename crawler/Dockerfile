@@ -20,5 +20,6 @@ RUN echo "*/3 * * * * /app/bin/run_spider.sh >> /var/log/cron.log 2>&1" > /etc/c
 # Create a Scrapyd configuration file, binding this address will allow to access the Scrapyd API from outside the container
 RUN echo "[scrapyd]" > /app/scrapyd.conf && \
   echo "bind_address = 0.0.0.0" >> /app/scrapyd.conf
+RUN scrapy deploy -p crawler -o /app/scrapyd.conf
 
 CMD ["./bin/start.sh"]
