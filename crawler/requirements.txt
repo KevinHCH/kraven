@@ -32,6 +32,7 @@ requests==2.32.3
 requests-file==2.1.0
 Scrapy==2.11.2
 scrapyd==1.5.0
+scrapyd-client==1.2.3
 selectolax==0.3.21
 service-identity==24.1.0
 setuptools==75.1.0
