@@ -10,8 +10,8 @@ import sqlite3
 from pathlib import Path
 from datetime import datetime
 
-# BASE_DIR = Path(__file__).resolve().parent.parent.parent
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
 print("base_dir", BASE_DIR)
 
 
@@ -46,21 +46,25 @@ class SQLitePipeline:
 
     def process_item(self, item, spider):
         now = datetime.now()
-        self.cursor.execute(
-            """
-            INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
-        """,
-            (
-                item["title"],
-                item["url"],
-                item["posted_at"],
-                item["posted_at_datetime"],
-                item["job_type"],
-                item["experience_level"],
-                item["description"],
-                item["price"],
-                now,
-            ),
-        )
+        self.cursor.execute("SELECT * FROM jobs WHERE url = ?", (item["url"],))
+        result = self.cursor.fetchone()
+        if not result:
+          self.cursor.execute(
+              """
+              INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
+          """,
+              (
+                  item["title"],
+                  item["url"],
+                  item["posted_at"],
+                  item["posted_at_datetime"],
+                  item["job_type"],
+                  item["experience_level"],
+                  item["description"],
+                  item["price"],
+                  now,
+              ),
+          )
+
         return item

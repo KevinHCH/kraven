@@ -107,4 +107,4 @@ class UpworkSpider(scrapy.Spider):
         dt = dateparser.parse(text)
         if dt is None:
             return text
-        return dt.astimezone()
+        return dt
