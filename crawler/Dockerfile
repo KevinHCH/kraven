@@ -23,8 +23,8 @@ RUN echo "[scrapyd]" > /app/scrapyd.conf && \
   echo "eggs_dir = /app/eggs" >> /app/scrapyd.conf && \
   echo "dbs_dir = /app/dbs" >> /app/scrapyd.conf
 
-# Set up cron job to run spider every 3 minutes
-RUN echo "*/3 * * * * /app/bin/run_spider.sh >> /var/log/cron.log 2>&1" > /etc/crontabs/root
+# Set up cron job to run spider every 3 minutes on weekdays
+RUN echo "*/3 * * * 1-5 /app/bin/run_spider.sh >> /var/log/cron.log 2>&1" > /etc/crontabs/root
 
 # Ensure scripts are executable
 RUN chmod +x /app/bin/start.sh
