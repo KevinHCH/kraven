@@ -29,7 +29,7 @@ class SQLitePipeline:
                                 title TEXT, 
                                 url TEXT, 
                                 posted_at TEXT,
-                                posted_at_datetime TEXT,
+                                posted_at_datetime TIMESTAMP,
                                 job_type TEXT, 
                                 experience_level TEXT, 
                                 description TEXT,
@@ -48,6 +48,7 @@ class SQLitePipeline:
         now = datetime.now()
         self.cursor.execute("SELECT * FROM jobs WHERE url = ?", (item["url"],))
         result = self.cursor.fetchone()
+        print(result)
         if not result:
           self.cursor.execute(
               """

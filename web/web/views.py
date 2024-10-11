@@ -9,7 +9,7 @@ import json, time
 
 def index(request):
     jobs_list = Jobs.objects.all().order_by("-posted_at_datetime")
-    paginator = Paginator(jobs_list, 20)
+    paginator = Paginator(jobs_list, 8)
     page_number = request.GET.get("page", 1)
     jobs = paginator.get_page(page_number)
     return render(request, "index.html", {"jobs": jobs, "paginator": paginator})
@@ -23,7 +23,7 @@ def stream(request):
                 now = timezone.now()
                 two_minutes_ago = now - timedelta(minutes=2)
                 jobs = Jobs.objects.filter(created_at__gte=two_minutes_ago).order_by(
-                    "-created_at"
+                    "-posted_at_datetime"
                 )
                 if jobs.exists():
                     # Convert job data to a list of dictionaries

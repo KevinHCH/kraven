@@ -9,8 +9,8 @@ from scrapy.http import JsonRequest
 import dateparser
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-# BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 class UpworkSpider(scrapy.Spider):
@@ -19,6 +19,7 @@ class UpworkSpider(scrapy.Spider):
     start_urls = ["https://upwork.com"]
 
     docker_endpoint = "http://flaresolverr:8191/v1"
+    # docker_endpoint = "http://localhost:8191/v1"
 
     def start_requests(self):
         file_path = BASE_DIR / "data" / "urls.json"
@@ -104,7 +105,8 @@ class UpworkSpider(scrapy.Spider):
         return any(term in text.lower() for term in terms_to_avoid)
 
     def parse_datetime(self, text):
-        dt = dateparser.parse(text)
+        cleaned_text = text.lower().replace("posted","").strip()
+        dt = dateparser.parse(cleaned_text)
         if dt is None:
             return text
         return dt
