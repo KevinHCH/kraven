@@ -10,10 +10,20 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up SSH
+        run: |
+          # Create the .ssh directory
+          mkdir -p ~/.ssh
+
+          # Set permissions for the directory
+          chmod 700 ~/.ssh
+
+          # Add the private key to a file
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa  # Set appropriate permissions
+
+          # Add the server's IP to known_hosts to prevent man-in-the-middle attacks
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy to Server
         run: |
