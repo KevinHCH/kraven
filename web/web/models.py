@@ -21,6 +21,8 @@ class Jobs(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     price = models.TextField(blank=True, null=True)
     sended_at = models.DateTimeField(null=True, blank=True)
+    topic_name = models.CharField(max_length=50, null=True)
 
     class Meta:
+        managed = False
         db_table = "jobs"

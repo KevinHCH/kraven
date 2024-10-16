@@ -1,6 +1,6 @@
 FROM python:3.12-alpine
 
-RUN apk add --no-cache curl tzdata dcron
+RUN apk add --no-cache curl tzdata dcron jq
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app

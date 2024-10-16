@@ -19,34 +19,38 @@ class UpworkSpider(scrapy.Spider):
     start_urls = ["https://upwork.com"]
 
     docker_endpoint = "http://flaresolverr:8191/v1"
+
     # docker_endpoint = "http://localhost:8191/v1"
+    def __init__(self, target_url=None, topic_name=None, *args, **kwargs):
+        super(UpworkSpider, self).__init__(*args, **kwargs)
+        self.target_url = target_url
+        self.topic_name = topic_name
 
     def start_requests(self):
-        file_path = BASE_DIR / "data" / "urls.json"
-        with open(file_path, "r") as f:
-            urls = json.load(f)
-        for search_item in urls:
-            name = search_item["name"]
-            target_url = search_item["url"]
-            logging.info(
-                f"Sending POST request to Docker service for {name}: {target_url}"
-            )
+        if not self.target_url:
+            logging.error("No target URL provided. Exiting.")
+            return
+        name = self.topic_name
+        target_url = self.target_url
 
-            payload = {
-                "cmd": "request.get",
-                "url": target_url,
-                "maxTimeout": 30000,  # 30 seconds (milliseconds)
-            }
-            # Send the request to the Docker container (flaresolver)
-            yield JsonRequest(
-                url=self.docker_endpoint,
-                data=payload,
-                callback=self.parse,
-                method="POST",
-                headers={"Content-Type": "application/json"},
-                meta={"name": name, "target_url": target_url},
-                dont_filter=True,
-            )
+        name = self.topic_name if self.topic_name else "Unknown"
+        target_url = self.target_url
+
+        payload = {
+            "cmd": "request.get",
+            "url": target_url,
+            "maxTimeout": 30000,  # 30 seconds (milliseconds)
+        }
+        # Send the request to the Docker container (flaresolver)
+        yield JsonRequest(
+            url=self.docker_endpoint,
+            data=payload,
+            callback=self.parse,
+            method="POST",
+            headers={"Content-Type": "application/json"},
+            meta={"name": name, "target_url": target_url},
+            dont_filter=True,
+        )
 
     def parse(self, response):
         response_data = json.loads(response.text)
@@ -89,6 +93,7 @@ class UpworkSpider(scrapy.Spider):
                     "duration": duration,
                     "experience_level": experience_level,
                     "description": description,
+                    "topic_name": self.topic_name,
                 }
 
     def sanitize(self, text):
@@ -105,7 +110,7 @@ class UpworkSpider(scrapy.Spider):
         return any(term in text.lower() for term in terms_to_avoid)
 
     def parse_datetime(self, text):
-        cleaned_text = text.lower().replace("posted","").strip()
+        cleaned_text = text.lower().replace("posted", "").strip()
         dt = dateparser.parse(cleaned_text)
         if dt is None:
             return text

@@ -12,7 +12,12 @@ is_time_to_run() {
 
 
 if is_time_to_run; then
-    curl http://localhost:6800/schedule.json -d project=default -d spider=upwork
+    # curl http://localhost:6800/schedule.json -d project=default -d spider=upwork
+    jq -c '.[]' ./data/urls.json | while read -r url; do
+        name=$(echo $url | jq -r '.name')
+        url=$(echo $url | jq -r '.url')
+        curl http://localhost:6800/schedule.json -d project=default -d spider=upwork -d target_url="$url" -d topic_name="$name"
+    done
 else
     echo "[$(date +%H:%M:%S)]Not running spider - outside of scheduled hours"
 fi

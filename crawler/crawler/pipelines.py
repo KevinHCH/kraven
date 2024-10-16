@@ -35,7 +35,8 @@ class SQLitePipeline:
                                 description TEXT,
                                 created_at TIMESTAMP NOT NULL,
                                 price TEXT,
-                                sended_at TIMESTAMP
+                                sended_at TIMESTAMP,
+                                topic_name TEXT
                                )"""
         )
 
@@ -50,22 +51,23 @@ class SQLitePipeline:
         result = self.cursor.fetchone()
         print(result)
         if not result:
-          self.cursor.execute(
-              """
+            self.cursor.execute(
+                """
               INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
           """,
-              (
-                  item["title"],
-                  item["url"],
-                  item["posted_at"],
-                  item["posted_at_datetime"],
-                  item["job_type"],
-                  item["experience_level"],
-                  item["description"],
-                  item["price"],
-                  now,
-              ),
-          )
+                (
+                    item["title"],
+                    item["url"],
+                    item["posted_at"],
+                    item["posted_at_datetime"],
+                    item["job_type"],
+                    item["experience_level"],
+                    item["description"],
+                    item["price"],
+                    item["topic_name"],
+                    now,
+                ),
+            )
 
         return item
