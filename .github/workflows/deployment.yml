@@ -9,7 +9,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Test SSH key
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -c 20
+        run: |
+          env
+          cat /etc/os-release
+          ls ~/.ssh
 
       - name: Add SSH key
         uses: webfactory/ssh-agent@v0.5.3
