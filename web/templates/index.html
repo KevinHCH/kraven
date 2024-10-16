@@ -20,8 +20,8 @@
                 </p>
                 <p class="text-gray-300 text-sm">
                     posted:
-                    <span class="font-bold {% if 'seconds' in job.posted_at or 'minutes' in job.posted_at %} text-green-500 {% elif 'hours' in job.posted_at %} text-amber-400 {% else %} text-red-500 {% endif %} ">
-                        {{ job.posted_at }}
+                    <span class="font-bold {% if 'seconds' in job.posted_at or 'minutes' in job.posted_at or 'minute' in job.posted_at %} text-green-500 {% elif 'hours' in job.posted_at %} text-amber-400 {% else %} text-red-500 {% endif %} ">
+                        {{ job.posted_at_datetime|date:"H:i - d/M/Y" }}
                     </span>
                 </p>
                 <p class="text-gray-300 text-sm pt-2">{{ job.description|slice:":200"|add:"..." }}</p>
@@ -50,5 +50,5 @@
             {% endif %}
         </ul>
     </nav>
-    <script src="{% static 'js/index.js' %}"></script>
+    {% comment %} <script src="{% static 'js/index.js' %}"></script> {% endcomment %}
 {% endblock content %}
