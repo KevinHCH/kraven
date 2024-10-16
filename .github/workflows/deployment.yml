@@ -9,12 +9,6 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Test SSH key
-        run: |
-          env
-          cat /etc/os-release
-          ls ~/.ssh
-
       - name: Add SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
