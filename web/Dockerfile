@@ -19,6 +19,6 @@ RUN npm run gen:styles
 
 RUN python manage.py collectstatic --noinput
 RUN python manage.py compress
-RUN python manage.py migrate --noinput
+# RUN python manage.py migrate --noinput
 EXPOSE 8000
 CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
