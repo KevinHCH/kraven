@@ -14,9 +14,6 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Set up Docker Compose environment
-        run: |
-          echo "HOST_DOMAIN=${{ secrets.HOST_DOMAIN }}" >> .env
 
       - name: Deploy to Server
         run: |
@@ -29,6 +26,7 @@ jobs:
             # Stop running containers
             docker-compose down
 
+            export HOST_DOMAIN=${{ secrets.HOST_DOMAIN }}
             # Rebuild and start services
             docker-compose up --build -d
           EOF
