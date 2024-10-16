@@ -1,9 +1,10 @@
 name: Deploy to server
+run-name: "Deploy to server"
 on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: prod
+    environment: prod #this is very important when you attach the secrets to an specific environment, it must the same name as the environment
 
     steps:
       - name: Checkout the code
@@ -13,6 +14,9 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up Docker Compose environment
+        run: |
+          echo "HOST_DOMAIN=${{ secrets.HOST_DOMAIN }}" >> .env
 
       - name: Deploy to Server
         run: |

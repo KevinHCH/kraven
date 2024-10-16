@@ -4,7 +4,6 @@ RUN apk add --no-cache curl tzdata nodejs npm
 # Environment variables to prevent Python from writing .pyc files and to buffer stdout/stderr
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV APP_MODE=production
 
 WORKDIR /app
 

@@ -25,7 +25,7 @@ is_prod = os.getenv("APP_MODE", "development") == "production"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = is_prod
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "jobs.tildrow.com"]
+ALLOWED_HOSTS = ['127.0.0.1', os.getenv("HOST_DOMAIN", "localhost")]
 
 
 # Application definition
