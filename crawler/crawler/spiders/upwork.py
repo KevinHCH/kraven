@@ -26,32 +26,27 @@ class UpworkSpider(scrapy.Spider):
         self.topic_name = topic_name
 
     def start_requests(self):
-        if not self.target_url:
-            logging.error("No target URL provided. Exiting.")
-            return
-        name = self.topic_name
-        target_url = self.target_url
-
-        name = self.topic_name if self.topic_name else "Unknown"
-        target_url = self.target_url
-
+        logging.info(f"Starting {self.name} spider")
+        logging.info(f"Target URL: {self.target_url}")
+        """Send the request to flaresolverr to bypass protections"""
         payload = {
             "cmd": "request.get",
-            "url": target_url,
+            "url": self.target_url,
             "maxTimeout": 30000,  # 30 seconds (milliseconds)
         }
-        # Send the request to the Docker container (flaresolver)
+        # Send the request to the Docker container (flaresolverr)
         yield JsonRequest(
             url=self.docker_endpoint,
             data=payload,
             callback=self.parse,
             method="POST",
             headers={"Content-Type": "application/json"},
-            meta={"name": name, "target_url": target_url},
+            meta={"name": self.topic_name, "target_url": self.target_url},
             dont_filter=True,
         )
 
     def parse(self, response):
+
         response_data = json.loads(response.text)
 
         if response_data["status"] != "ok":

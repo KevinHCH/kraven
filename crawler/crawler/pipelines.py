@@ -12,7 +12,6 @@ from datetime import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # BASE_DIR = Path(__file__).resolve().parent.parent
-print("base_dir", BASE_DIR)
 
 
 class SQLitePipeline:
