@@ -28,7 +28,8 @@ COPY crontab /etc/crontabs/root
 
 # Ensure scripts are executable
 RUN chmod +x /app/bin/start.sh
-RUN chmod +x /app/bin/run_spider.sh
+# RUN chmod +x /app/bin/run_spider.sh
+RUN chmod +x /app/bin/run_spider.py
 
 # Start cron daemon and Scrapyd server
 CMD ["./bin/start.sh"]
