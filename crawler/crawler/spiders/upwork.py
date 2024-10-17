@@ -18,9 +18,7 @@ class UpworkSpider(scrapy.Spider):
     allowed_domains = ["upwork.com"]
     start_urls = ["https://upwork.com"]
 
-    # docker_endpoint = "http://flaresolverr:8191/v1"
-
-    docker_endpoint = "http://158.220.120.76:8191/v1"
+    docker_endpoint = "http://flaresolverr:8191/v1"
 
     def __init__(self, target_url=None, topic_name=None, *args, **kwargs):
         super(UpworkSpider, self).__init__(*args, **kwargs)

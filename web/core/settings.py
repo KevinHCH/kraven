@@ -76,8 +76,8 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-# sqlite_db_path = BASE_DIR if DEBUG else BASE_DIR.parent
-sqlite_db_path = BASE_DIR.parent
+sqlite_db_path = BASE_DIR if DEBUG else BASE_DIR.parent
+# sqlite_db_path = BASE_DIR.parent
 print("sqlite_db_path", sqlite_db_path)
 DATABASES = {
     "default": {
