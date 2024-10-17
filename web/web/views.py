@@ -26,6 +26,10 @@ def index(request):
     paginator = Paginator(jobs_list, 16)
     page_number = request.GET.get("page", 1)
     jobs = paginator.get_page(page_number)
+    
+    today = timezone.now().date()
+    total_jobs_today = Jobs.objects.filter(created_at__date=today)
+
     return render(
         request,
         "index.html",
@@ -34,6 +38,7 @@ def index(request):
             "paginator": paginator,
             "category": category,
             "categories": categories,
+            "total_jobs_today": total_jobs_today.count(),
         },
     )
 

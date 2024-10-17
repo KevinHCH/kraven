@@ -4,7 +4,7 @@
     Kraven | Jobs
 {% endblock head_title %}
 {% block content %}
-    <h1 class="text-2xl uppercase mx-auto pb-4 text-center">jobs</h1>
+    <h1 class="text-2xl uppercase mx-auto pb-4 text-center"><a href="/">jobs ({{total_jobs_today}})</a></h1>
     {% comment %} categories {% endcomment %}
     <ul class="flex flex-wrap justify-center gap-4 my-2 ">
         {% for category in categories %}

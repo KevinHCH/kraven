@@ -1,3 +1,3 @@
 # */3 * * * 1-5 /app/bin/run_spider.sh >> /var/log/cron.log 2>&1 > /etc/crontabs/root
-*/3 * * * 1-5 python /app/bin/run_spider.py >> /var/log/cron.log 2>&1
+*/2 * * * 1-5 python /app/bin/run_spider.py >> /var/log/cron.log 2>&1
 0 0 * * 6 python /app/bin/remove_old_jobs.py >> /var/log/cron.log 2>&1
