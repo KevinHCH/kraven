@@ -46,7 +46,6 @@ class UpworkSpider(scrapy.Spider):
         )
 
     def parse(self, response):
-
         response_data = json.loads(response.text)
 
         if response_data["status"] != "ok":
