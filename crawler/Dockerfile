@@ -26,7 +26,7 @@ RUN echo "[scrapyd]" > /app/scrapyd.conf && \
 # Set up cron job to run spider every 3 minutes on weekdays
 RUN echo "*/3 * * * 1-5 /app/bin/run_spider.sh >> /var/log/cron.log 2>&1" > /etc/crontabs/root
 # remove older jobs every sunday at 00:00
-RUN echo "0 0 * * 6 python /app/bin/remove_old_jobs.py >> /var/log/cron.log 2>&1" > /etc/crontabs/root
+# RUN echo "0 0 * * 6 python /app/bin/remove_old_jobs.py >> /var/log/cron.log 2>&1" > /etc/crontabs/root
 
 
 # Ensure scripts are executable
