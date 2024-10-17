@@ -9,8 +9,8 @@
     <ul class="flex flex-wrap justify-center gap-4 my-2 ">
         {% for category in categories %}
             <li class="border border-solid px-2 py-1">
-            <a href="?category={{ category.topic_name }}">{{ category.topic_name }}</a> 
-            ({{ category.job_count }})
+                <a href="?category={{ category.topic_name }}">{{ category.topic_name }}</a>
+                ({{ category.job_count }})
             </li>
         {% endfor %}
     </ul>

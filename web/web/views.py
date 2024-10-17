@@ -23,8 +23,6 @@ def index(request):
     else:
         jobs_list = Jobs.objects.all().order_by("-posted_at_datetime")
 
-    jobs_list = Jobs.objects.all().order_by("-posted_at_datetime")
-    print("posted-at", jobs_list[0].posted_at_datetime)
     paginator = Paginator(jobs_list, 16)
     page_number = request.GET.get("page", 1)
     jobs = paginator.get_page(page_number)
@@ -39,8 +37,10 @@ def index(request):
         },
     )
 
+
 def not_found_view(request, exception):
-    return render(request, '404.html', status=404)
+    return render(request, "404.html", status=404)
+
 
 def stream(request):
     def generator():
