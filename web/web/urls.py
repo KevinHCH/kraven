@@ -8,3 +8,4 @@ urlpatterns = [
     path("stream", views.stream, name="stream"),
     path("json", views.json_test, name="json"),
 ]
+handler404 = 'core.views.not_found_view'

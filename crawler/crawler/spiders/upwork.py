@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 class UpworkSpider(scrapy.Spider):
     name = "upwork"
     allowed_domains = ["upwork.com"]
-    start_urls = ["https://upwork.com"]
+    # start_urls = ["https://upwork.com"]
 
     docker_endpoint = "http://flaresolverr:8191/v1"
 

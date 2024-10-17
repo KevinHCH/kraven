@@ -39,6 +39,8 @@ def index(request):
         },
     )
 
+def not_found_view(request, exception):
+    return render(request, '404.html', status=404)
 
 def stream(request):
     def generator():

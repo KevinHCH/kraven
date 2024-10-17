@@ -2,5 +2,49 @@
   {
     "name": "scrapy python",
     "url": "https://www.upwork.com/nx/search/jobs/?amount=100-499,500-999,1000-4999,5000-,200-&client_hires=1-9,10-&contractor_tier=2,3&hourly_rate=30-&payment_verified=1&proposals=0-4,5-9&q=scrapy%20python&sort=recency&t=0,1"
+  },
+  {
+    "name": "web developer",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=30-&location=Americas,Europe,Oceania&payment_verified=1&proposals=0-4,5-9&q=%28web%20AND%20developer%29%20AND%20NOT%20%28webflow%20OR%20wordpress%29&sort=recency&t=0,1"
+  },
+  {
+    "name": "aws",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&location=Northern%20America,Northern%20Europe,South-Eastern%20Asia,Southern%20Europe,Western%20Asia,Western%20Europe&payment_verified=1&proposals=0-4,5-9&q=aws&sort=recency&t=0,1"
+  },
+  {
+    "name": "data crawler",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=300-&contractor_tier=2,3&hourly_rate=35-&location=Australia%20and%20New%20Zealand,Eastern%20Europe,Northern%20America,Northern%20Europe,South%20America,Western%20Asia,Western%20Europe&payment_verified=1&proposals=0-4,5-9&q=data%20crawler&sort=recency&t=0,1"
+  },
+  {
+    "name": "puppeteer",
+    "url": "https: //www.upwork.com/nx/search/jobs/?amount=150-&contractor_tier=2,3&hourly_rate=40-&payment_verified=1&proposals=0-4,5-9&q=puppeteer&sort=recency&t=0,1"
+  },
+  {
+    "name": "nextjs",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=2,3&hourly_rate=35-&proposals=0-4,5-9&q=nextjs&sort=recency&t=0,1"
+  },
+  {
+    "name": "python",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&proposals=0-4,5-9&q=python&sort=recency&t=0,1"
+  },
+  {
+    "name": "scraping",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&proposals=0-4,5-9&q=scraping&sort=recency&t=0,1"
+  },
+  {
+    "name": "figma to react",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&proposals=0-4,5-9&q=figma%20to%20react&sort=recency&t=0,1"
+  },
+  {
+    "name": "react js",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&proposals=0-4,5-9&q=%28react%20AND%20developer%29%20AND%20NOT%20%28redux%20OR%20expensify%29&sort=recency&t=0,1"
+  },
+  {
+    "name": "web automation",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&proposals=0-4,5-9&q=web%20automation&sort=recency&t=0,1"
+  },
+  {
+    "name": "task automation",
+    "url": "https://www.upwork.com/nx/search/jobs/?amount=200-&client_hires=1-9,10-&contractor_tier=1,2,3&hourly_rate=35-&ontology_skill_uid=996364628025274386,996364628025274383&proposals=0-4,5-9&q=%28task%20AND%20automation%29&sort=recency&t=0,1"
   }
 ]
