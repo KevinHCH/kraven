@@ -4,15 +4,40 @@ from django.http import StreamingHttpResponse, JsonResponse
 from django.utils import timezone
 from datetime import timedelta
 from .models import Jobs
+from django.db.models import Count
 import json, time
 
 
 def index(request):
+    category = request.GET.get("category", None)
+    categories = (
+        Jobs.objects.values("topic_name")
+        .annotate(job_count=Count("id"))
+        .order_by("topic_name")
+    )
+
+    if category:
+        jobs_list = Jobs.objects.filter(topic_name=category).order_by(
+            "-posted_at_datetime"
+        )
+    else:
+        jobs_list = Jobs.objects.all().order_by("-posted_at_datetime")
+
     jobs_list = Jobs.objects.all().order_by("-posted_at_datetime")
-    paginator = Paginator(jobs_list, 8)
+    print("posted-at", jobs_list[0].posted_at_datetime)
+    paginator = Paginator(jobs_list, 16)
     page_number = request.GET.get("page", 1)
     jobs = paginator.get_page(page_number)
-    return render(request, "index.html", {"jobs": jobs, "paginator": paginator})
+    return render(
+        request,
+        "index.html",
+        {
+            "jobs": jobs,
+            "paginator": paginator,
+            "category": category,
+            "categories": categories,
+        },
+    )
 
 
 def stream(request):
@@ -37,6 +62,7 @@ def stream(request):
                             "experience_level": job.experience_level,
                             "description": job.description,
                             "price": job.price,
+                            "category": job.topic_name,
                         }
                         for job in jobs
                     ]

@@ -40,7 +40,7 @@ services:
     environment:
       - TZ=Europe/Berlin
       - HOST_DOMAIN=${HOST_DOMAIN}
-      - APP_MODE=production
+      # - DEBUG=False
     volumes:
       - ./data:/app/data
     restart: unless-stopped

@@ -5,6 +5,15 @@
 {% endblock head_title %}
 {% block content %}
     <h1 class="text-2xl uppercase mx-auto pb-4 text-center">jobs</h1>
+    {% comment %} categories {% endcomment %}
+    <ul class="flex flex-wrap justify-center gap-4 my-2 ">
+        {% for category in categories %}
+            <li class="border border-solid px-2 py-1">
+            <a href="?category={{ category.topic_name }}">{{ category.topic_name }}</a> 
+            ({{ category.job_count }})
+            </li>
+        {% endfor %}
+    </ul>
     <div id="job-container"
          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {% for job in jobs %}
@@ -17,6 +26,9 @@
                 <p class="text-green-400 font-bold mb-2">{{ job.price|default_if_none:job.job_type }}</p>
                 <p class="text-gray-300 text-sm">
                     experience: <span class="font-bold">{{ job.experience_level }}</span>
+                </p>
+                <p class="text-gray-300 text-sm">
+                    category: <span class="font-bold text-amber-600">{{ job.topic_name }}</span>
                 </p>
                 <p class="text-gray-300 text-sm">
                     posted:

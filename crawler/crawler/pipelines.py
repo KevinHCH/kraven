@@ -49,11 +49,11 @@ class SQLitePipeline:
         now = datetime.now()
         self.cursor.execute("SELECT * FROM jobs WHERE url = ?", (item["url"],))
         result = self.cursor.fetchone()
-        print(result)
+        # print(result)
         if not result:
             self.cursor.execute(
                 """
-              INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at)
+              INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at, topic_name)
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
           """,
                 (
@@ -65,8 +65,8 @@ class SQLitePipeline:
                     item["experience_level"],
                     item["description"],
                     item["price"],
-                    item["topic_name"],
                     now,
+                    item["topic_name"],
                 ),
             )
 

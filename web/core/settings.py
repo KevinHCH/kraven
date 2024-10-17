@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,11 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-i@$d_^ws0^_v@-r$ocow0s27ih(y5bq$xktfy$5vz!gs6#=orf"
-is_prod = os.getenv("APP_MODE", "development") == "production"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = is_prod
+DEBUG = os.getenv("DEBUG", True)
 
-ALLOWED_HOSTS = ['127.0.0.1', os.getenv("HOST_DOMAIN", "localhost")]
+ALLOWED_HOSTS = ["127.0.0.1", os.getenv("HOST_DOMAIN", "localhost")]
 
 
 # Application definition
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware"
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -76,8 +76,9 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-sqlite_db_path = BASE_DIR if is_prod else BASE_DIR.parent
-
+# sqlite_db_path = BASE_DIR if DEBUG else BASE_DIR.parent
+sqlite_db_path = BASE_DIR.parent
+print("sqlite_db_path", sqlite_db_path)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
