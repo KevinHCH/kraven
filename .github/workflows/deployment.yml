@@ -38,5 +38,5 @@ jobs:
 
             export HOST_DOMAIN=${{ secrets.HOST_DOMAIN }}
             # Rebuild and start services
-            docker-compose up --build -d
+            docker-compose up --build --force-recreate --no-deps -d
           EOF
