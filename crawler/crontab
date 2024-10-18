@@ -1,2 +1,4 @@
+# cron schedules for scrapyd
 */2 * * * 1-5 python /app/bin/run_spider.py >> /var/log/cron.log 2>&1
+# remove old jobs
 0 0 * * 6 python /app/bin/remove_old_jobs.py >> /var/log/cron.log 2>&1
