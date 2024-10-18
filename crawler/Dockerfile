@@ -25,6 +25,9 @@ RUN echo "[scrapyd]" > /app/scrapyd.conf && \
 
 # setup the cron job
 COPY crontab /etc/crontabs/root
+RUN chmod 0644 /etc/crontabs/root
+RUN chown root:root /etc/crontabs/root && chmod 0644 /etc/crontabs/root
+
 
 # Ensure scripts are executable
 RUN chmod +x /app/bin/start.sh

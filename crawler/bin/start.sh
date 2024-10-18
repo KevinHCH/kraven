@@ -1,4 +1,4 @@
 #!/bin/sh
 # Start the cron daemon and the Scrapyd server
-crond
+crond &
 exec scrapyd
