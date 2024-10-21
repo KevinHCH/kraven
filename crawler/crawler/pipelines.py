@@ -50,6 +50,7 @@ class SQLitePipeline:
         result = self.cursor.fetchone()
         # print(result)
         if not result:
+            print("* Saving a new job: ", item["title"])
             self.cursor.execute(
                 """
               INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at, topic_name)
