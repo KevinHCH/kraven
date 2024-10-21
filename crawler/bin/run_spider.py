@@ -23,7 +23,7 @@ def run_spider(target_url, topic_name):
     }
     response = requests.post(endpoint, data=payload)
     if response.status_code == 200:
-        print(f"Scheduled spider for {topic_name} ({target_url})")
+        print(f"Scheduled spider for {topic_name} at ({datetime.now().strftime('%H:%M:%S')})")
     else:
         print(f"Failed to schedule spider for {topic_name} ({target_url}): {response.status_code}")
 
