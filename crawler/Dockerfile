@@ -24,9 +24,9 @@ RUN echo "[scrapyd]" > /app/scrapyd.conf && \
   echo "dbs_dir = /app/dbs" >> /app/scrapyd.conf
 
 # setup the cron job
-COPY crontab /etc/crontabs/root
-RUN chmod 0644 /etc/crontabs/root
-RUN chown root:root /etc/crontabs/root && chmod 0644 /etc/crontabs/root
+COPY crontab /etc/cron.d/root
+RUN chmod 0644 /etc/cron.d/root
+RUN chown root:root /etc/cron.d/root && chmod 0644 /etc/cron.d/root
 
 
 # Ensure scripts are executable
