@@ -18,8 +18,7 @@ class SQLitePipeline:
     def open_spider(self, spider):
         # Connect to the SQLite database
         db_path = BASE_DIR / "data" / "jobs.db"
-        print(f"Connecting to database: {db_path}")
-        self.conn = sqlite3.connect(db_path)
+        self.conn = sqlite3.connect(db_path, timeout=10)
         self.cursor = self.conn.cursor()
         # Create the jobs table if it doesn't exist
         self.cursor.execute(
@@ -45,29 +44,32 @@ class SQLitePipeline:
         self.conn.close()
 
     def process_item(self, item, spider):
-        now = datetime.now()
-        self.cursor.execute("SELECT * FROM jobs WHERE url = ?", (item["url"],))
-        result = self.cursor.fetchone()
-        # print(result)
-        if not result:
-            print("* Saving a new job: ", item["title"])
-            self.cursor.execute(
-                """
-              INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at, topic_name)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
-          """,
-                (
-                    item["title"],
-                    item["url"],
-                    item["posted_at"],
-                    item["posted_at_datetime"],
-                    item["job_type"],
-                    item["experience_level"],
-                    item["description"],
-                    item["price"],
-                    now,
-                    item["topic_name"],
-                ),
-            )
-
+        try:
+            self.cursor.execute("SELECT * FROM jobs WHERE url = ?", (item["url"],))
+            result = self.cursor.fetchone()
+            if not result:
+                print(f"Saving new job: {item['title']}")
+                self.cursor.execute(
+                    """
+                  INSERT INTO jobs (title, url, posted_at, posted_at_datetime, job_type, experience_level, description, price, created_at, topic_name)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+                  """,
+                    (
+                        item["title"],
+                        item["url"],
+                        item["posted_at"],
+                        item["posted_at_datetime"],
+                        item["job_type"],
+                        item["experience_level"],
+                        item["description"],
+                        item["price"],
+                        datetime.now(),
+                        item["topic_name"],
+                    ),
+                )
+                self.conn.commit()
+            else:
+                print(f"Job already exists: {item['title']}")
+        except sqlite3.OperationalError as e:
+            spider.logger.error(f"Database error: {e}")
         return item

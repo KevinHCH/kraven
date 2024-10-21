@@ -33,6 +33,7 @@ RUN chown root:root /etc/cron.d/root && chmod 0644 /etc/cron.d/root
 RUN chmod +x /app/bin/start.sh
 # RUN chmod +x /app/bin/run_spider.sh
 RUN chmod +x /app/bin/run_spider.py
+RUN chmod +x /app/bin/run_spider.sh
 
 # Start cron daemon and Scrapyd server
 CMD ["./bin/start.sh"]
