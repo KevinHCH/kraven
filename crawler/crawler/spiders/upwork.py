@@ -26,7 +26,7 @@ class UpworkSpider(scrapy.Spider):
         self.topic_name = topic_name
 
     def start_requests(self):
-        logging.info(f"Starting {self.name} spider")
+        logging.info(f"Starting {self.topic_name} spider")
         logging.info(f"Target URL: {self.target_url}")
         """Send the request to flaresolverr to bypass protections"""
         payload = {
@@ -46,7 +46,13 @@ class UpworkSpider(scrapy.Spider):
         )
 
     def parse(self, response):
-        response_data = json.loads(response.text)
+        # response_data = json.loads(response.text)
+        try:
+            response_data = json.loads(response.text)
+        except json.JSONDecodeError:
+            # Handle invalid JSON response
+            logging.error(f"Failed to decode JSON from FlareSolverr: {response.text}")
+            return
 
         if response_data["status"] != "ok":
             # Handle error, send notification if necessary
