@@ -63,9 +63,16 @@ class UpworkSpider(scrapy.Spider):
 
         # Get the HTML content from the response
         html = response_data["solution"]["response"]
+        if not html:
+            # If no HTML content is returned, log the error and stop processing
+            logging.error("No HTML content returned by FlareSolverr.")
+            return
 
         dom = HTMLParser(html)
         articles = dom.css("article")
+        if not articles:
+            logging.info("No articles found in the HTML.")
+            return
         for article in articles:
             posted_at = article.css_first(".job-tile-header small").text().strip()
             posted_at_datetime = self.parse_datetime(posted_at)
