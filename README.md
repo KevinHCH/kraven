@@ -8,6 +8,7 @@ This is a personal project designed to showcase skills in both **Scrapy** (for w
 - **Web**: A Django web application that connects to the SQLite database and displays relevant job listings based on user search criteria.
 
 The entire project runs using Docker to make local deployment easy and manageable.
+![Result of the product](./product.png)
 
 ## Project Structure
 
